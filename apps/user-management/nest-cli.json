@@ -1,0 +1,6 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "root": "apps/user-management",
+  "entryFile": "apps/user-management/src/main"
+}

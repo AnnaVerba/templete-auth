@@ -1,0 +1,63 @@
+version: "3"
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - template
+    env_file:
+      - ./apps/api-gateway/.env
+
+  auth:
+    container_name: auth
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+    ports:
+      - "3002:3002"
+    networks:
+      - template
+    env_file:
+      - ./apps/auth/.env
+    depends_on:
+      - postgres
+
+  delivery:
+    container_name: delivery
+    build:
+      context: .
+      dockerfile: ./apps/delivery/Dockerfile
+    ports:
+      - "3001:3001"
+    networks:
+      - template
+    env_file:
+      - ./apps/delivery/.env
+#
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    networks:
+      - template
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - '5432:5432'
+
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    networks:
+      - template
+
+networks:
+  template:

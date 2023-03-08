@@ -44,24 +44,7 @@
         "tsConfigPath": "apps/auth/tsconfig.json"
       }
     },
-    "config": {
-      "type": "application",
-      "root": "apps/config",
-      "entryFile": "main",
-      "sourceRoot": "apps/config/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/config/tsconfig.json"
-      }
-    },
-    "translation": {
-      "type": "application",
-      "root": "apps/translation",
-      "entryFile": "main",
-      "sourceRoot": "apps/translation/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/translation/tsconfig.json"
-      }
-    },
+
     "user-management": {
       "type": "application",
       "root": "apps/user-management",
@@ -70,15 +53,7 @@
       "compilerOptions": {
         "tsConfigPath": "apps/user-management/tsconfig.json"
       }
-    },
-    "payment": {
-      "type": "application",
-      "root": "apps/payments",
-      "sourceRoot": "apps/payments/src",
-      "entryFile": "main",
-      "compilerOptions": {
-        "tsConfigPath": "apps/payments/tsconfig.json"
-      }
     }
+
   }
 }

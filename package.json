@@ -44,9 +44,7 @@
     "all:tests": "(yarn run test:unit && yarn run test:payment:e2e)",
     "setup:api-gateway": "(cd apps/api-gateway && yarn install)",
     "setup:delivery": "(cd apps/auth && yarn install)",
-    "setup:payments": "(cd apps/payments && yarn install)",
-    "setup:user-management": "(cd apps/user-management && yarn install)",
-    "setup:test-service": "(cd apps/test-service && yarn install)"
+    "setup:user-management": "(cd apps/user-management && yarn install)"
   },
   "dependencies": {
     "@fastify/cookie": "^8.3.0",

@@ -31,7 +31,6 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/api-gateway/test/jest-e2e.json",
     "test:e2e:env": "set NODE_ENV=test",
-    "test:payment:e2e": "npm run test:e2e:env && jest --config apps/payments/test/jest-e2e.json --maxWorkers=1 --logHeapUsage",
     "migration:generate": "npx sequelize-cli migration:generate --name",
     "migration:run": "npx -production sequelize-cli db:migrate",
     "migration:run-dev": "npx sequelize-cli db:migrate",

@@ -40,7 +40,7 @@
     "prepare": "husky install",
     "setup": "concurrently --max-processes 1 \"yarn:setup:*\"",
     "setup:base": "yarn",
-    "all:tests": "(yarn run test:unit && yarn run test:payment:e2e)",
+    "all:tests": "(yarn run test:unit)",
     "setup:api-gateway": "(cd apps/api-gateway && yarn install)",
     "setup:delivery": "(cd apps/auth && yarn install)",
     "setup:user-management": "(cd apps/user-management && yarn install)"

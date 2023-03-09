@@ -16,10 +16,6 @@ export enum AuthMessagePatternEnum {
   loginWithFacebook = 'loginWithFacebook',
 }
 
-export enum DeliveryMessagePatternEnum {
-  sendEmail = 'sendEmail',
-}
-
 export enum UserManagementMessagePatternEnum {
   findAllUsers = 'findAllUsers',
   createNewUser = 'createNewUser',
@@ -42,21 +38,4 @@ export enum UserManagementMessagePatternEnum {
   findProviderByUser = 'findProviderByUser',
   updateProvider = 'updateProvider',
   deleteProvider = 'deleteProvider',
-
-  addRoleToUser = 'addRoleToUser',
-  removeRoleFromUser = 'removeRoleFromUser',
-
-  findAllRoles = 'findAllRoles',
-  createRole = 'createRole',
-  addPermissionToRole = 'addPermissionToRole',
-  removePermissionFromRole = 'removePermissionFromRole',
-  findRoleById = 'findRoleById',
-  updateRole = 'updateRole',
-  deleteRole = 'deleteRole',
-
-  createPermission = 'createPermission',
-  updatePermission = 'updatePermission',
-  findPermissionById = 'findPermissionById',
-  findAllPermissions = 'findAllPermissions',
-  deletePermission = 'deletePermission',
 }

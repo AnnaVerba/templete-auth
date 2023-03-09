@@ -3,7 +3,3 @@ export * from './user.model';
 export * from './user-profile.model';
 export * from './user-sessions.model';
 export * from './user-providers.model';
-export * from './users-roles.model';
-export * from './role.model';
-export * from './roles-permissions.model';
-export * from './permission.model';

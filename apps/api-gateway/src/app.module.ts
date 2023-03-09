@@ -1,7 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 
-import { UserController, RoleController, PermissionController } from './contollers';
 import {
   ConfigModule,
   ENV,
@@ -13,7 +12,7 @@ import {
 } from '@app/shared';
 import { ConfigFacade } from '@app/shared/configuration/config.facade';
 import { RequiredVariables } from './config/config';
-import { AuthController } from './contollers/auth.controller';
+import { AuthController } from './contollers';
 import { JwtSignOptions } from '@nestjs/jwt';
 
 const providers = [
@@ -62,7 +61,7 @@ const providers = [
   },
 ];
 
-const controllers = [UserController, RoleController, PermissionController, AuthController];
+const controllers = [AuthController];
 
 @Module({
   imports: [ConfigModule.forRoot(ENV, RequiredVariables), SharedModule],

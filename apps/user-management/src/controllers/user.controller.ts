@@ -15,8 +15,6 @@ import {
   UserProviderFindDto,
   UserProviderUpdateDto,
   UserFindDto,
-  UserRoleCreateDto,
-  UserRole,
   UserResponse,
   UserUpdateDto,
   FindAllQueryDto,
@@ -110,15 +108,5 @@ export class UserController {
   @MessagePattern(UserManagementMessagePatternEnum.deleteProvider)
   async deleteProvider(data: UserProviderFindDto): Promise<number> {
     return this.userService.deleteProvider(data);
-  }
-
-  @MessagePattern(UserManagementMessagePatternEnum.addRoleToUser)
-  async addRoleToUser(data: UserRoleCreateDto): Promise<UserRole> {
-    return this.userService.addRoleToUser(data);
-  }
-
-  @MessagePattern(UserManagementMessagePatternEnum.removeRoleFromUser)
-  async removeRoleFromUser(data: UserRoleCreateDto): Promise<number> {
-    return this.userService.removeRoleFromUser(data);
   }
 }

@@ -1,0 +1,6 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "root": "apps/mailing",
+  "entryFile": "apps/mailing/src/main"
+}

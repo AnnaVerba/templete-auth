@@ -1,0 +1,52 @@
+{
+  "name": "mailing",
+  "version": "1.0.0",
+  "description": "mailing package",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \\\\\\\"src/**/*.ts\\\\\\\" \\\\\\\"../../libs/shared/src/mailing/test/**/*.ts\\\\\\\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:integration": "jest --testRegex=\".*\\.ispec\\.ts$\""
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.(spec|ispec)\\.ts$",
+    "moduleNameMapper": {
+      "^@app/shared(|/.*)$": "<rootDir>/../../../libs/shared/src/$1"
+    },
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "@types/jest": "27.0.2",
+    "nodemailer": "^6.8.0"
+  },
+  "devDependencies": {
+    "@eropple/nestjs-correlation-id": "^1.0.1",
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb": "^19.0.4"
+  }
+}

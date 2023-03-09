@@ -1,4 +1,4 @@
-import { Role, UserProfile, UserProvider, UserSession } from '@app/shared/models';
+import { UserProfile, UserProvider, UserSession } from '@app/shared/models';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsUUID, IsDate, IsString, IsBoolean } from 'class-validator';
 import { UserProfileResponse } from '@app/shared/common';
@@ -45,7 +45,4 @@ export class UserResponse {
 
   @ApiProperty({ type: UserProviderResponse, description: "User's providers", isArray: true })
   providers: UserProvider[];
-
-  @ApiProperty({ type: Role, description: "User's roles", example: [], isArray: true })
-  roles: Role[];
 }

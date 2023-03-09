@@ -10,11 +10,10 @@ import {
   CreatedAt,
   UpdatedAt,
   HasMany,
-  BelongsToMany,
   HasOne,
   AllowNull,
 } from 'sequelize-typescript';
-import { Role, UserProfile, UserProvider, UserSession, UserRole } from '.';
+import { UserProfile, UserProvider, UserSession } from '.';
 
 @Table({ tableName: 'users' })
 export class User extends Model {
@@ -48,9 +47,6 @@ export class User extends Model {
 
   @HasMany(() => UserSession)
   sessions: UserSession[];
-
-  @BelongsToMany(() => Role, () => UserRole)
-  roles: Role[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

@@ -66,11 +66,11 @@ const providers = [
     inject: [ConfigFacade],
   },
   {
-    provide: MicroServicesEnum.DELIVERY_MS,
+    provide: MicroServicesEnum.MAILING_MS,
     useFactory: async (configFacade: ConfigFacade): Promise<ClientProxyFactory> => {
       const options = {
-        host: await configFacade.get('DELIVERY_MS_HOST'),
-        port: await configFacade.getNumber('DELIVERY_MS_PORT'),
+        host: await configFacade.get('MAILING_MS_HOST'),
+        port: await configFacade.getNumber('MAILING_MS_PORT'),
       };
       return ClientProxyFactory.create({
         transport: Transport.TCP,

@@ -5,7 +5,6 @@ import {
   JwtService,
   BcryptService,
   MicroServicesEnum,
-  DeliveryMessagePatternEnum,
   User,
   GoogleProfileInfo,
   FacebookProfileInfo,
@@ -26,6 +25,8 @@ import {
   UserProviderFindDto,
   UserProvider,
   UserProfile,
+  SEND_MESSAGE_PATTERN,
+  SendMessageDto,
 } from '@app/shared';
 import { v4 as uuidv4 } from 'uuid';
 import { lastValueFrom } from 'rxjs';
@@ -45,6 +46,7 @@ import {
 } from '@app/shared/common/dto/requests/auth';
 import { RefreshMetaDto } from '@app/shared/common/dto/requests/auth/refresh.dto';
 import { AuthProviders } from '../providers/providers';
+import { RequiredVariables } from '../config/config';
 
 @Injectable()
 export class AuthService {
@@ -57,7 +59,8 @@ export class AuthService {
     private googleAuthService: GoogleAuthService,
     private facebookAuthService: FacebookAuthService,
     private authSessionRepository: AuthSessionRepository,
-    @Inject(MicroServicesEnum.DELIVERY_MS) private mailService: ClientProxy,
+    private config: ConfigFacade,
+    @Inject(MicroServicesEnum.MAILING_MS) private mailService: ClientProxy,
     @Inject(MicroServicesEnum.USERMANAGEMENT_MS) private userClient: ClientProxy,
   ) {
     this.logger = new Logger(AuthService.name);
@@ -79,9 +82,11 @@ export class AuthService {
 
     const url = `${origin}/auth/signUp?verifyToken=${verifyToken}`;
     const wasMailSent = lastValueFrom(
-      this.mailService.send<boolean, { email: string; url: string }>(DeliveryMessagePatternEnum.sendEmail, {
-        email,
-        url,
+      this.mailService.send<{ statusCode: number; message: object }, SendMessageDto>(SEND_MESSAGE_PATTERN, {
+        to: email,
+        from: await this.config.get(RequiredVariables.MAIL_SENDER),
+        subject: 'Email verification',
+        text: url,
       }),
     );
 
@@ -171,13 +176,14 @@ export class AuthService {
     const loginToken = this.jwtService.signToken({ email });
 
     const url = `${origin}/auth/email?loginToken=${loginToken}`;
-    const wasMailSent = await lastValueFrom(
-      this.mailService.send<boolean, { email: string; url: string }>(DeliveryMessagePatternEnum.sendEmail, {
-        email,
-        url,
+    const wasMailSent = lastValueFrom(
+      this.mailService.send<{ statusCode: number; message: object }, SendMessageDto>(SEND_MESSAGE_PATTERN, {
+        to: email,
+        from: await this.config.get(RequiredVariables.MAIL_SENDER),
+        subject: 'Log in with email',
+        text: url,
       }),
     );
-
     if (!wasMailSent) {
       throw new InternalServerErrorException('Verification email has not been sent');
     }
@@ -233,10 +239,12 @@ export class AuthService {
     const recoveryToken = this.jwtService.signToken({ email });
     const url = `${origin}/auth/recovery?recoveryToken=${recoveryToken}`;
 
-    const wasMailSent = await lastValueFrom(
-      this.mailService.send<boolean, { email: string; url: string }>(DeliveryMessagePatternEnum.sendEmail, {
-        email,
-        url,
+    const wasMailSent = lastValueFrom(
+      this.mailService.send<{ statusCode: number; message: object }, SendMessageDto>(SEND_MESSAGE_PATTERN, {
+        to: email,
+        from: await this.config.get(RequiredVariables.MAIL_SENDER),
+        subject: 'Recovery password',
+        text: url,
       }),
     );
 
@@ -559,17 +567,6 @@ export class AuthService {
         await authSession.destroy();
       }
     }
-
-    // TODO: check if this needed.
-    // this.authSessionRepository.findAll().then((result): void => {
-    //   for (const authSession of result) {
-    //     try {
-    //       this.jwtService.verify(authSession.token);
-    //     } catch {
-    //       return authSession.destroy().then();
-    //     }
-    //   }
-    // });
   }
 
   async findUserByEmail(email: string): Promise<User | null> {

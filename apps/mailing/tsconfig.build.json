@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts","src/**/spec.ts",
+    "../../libs/shared/src/mailing/test"
+  ],
+  "exclude": [
+    "../mailing/node_modules",
+    "../../libs/shared/src/mailing/test", "dist", "**/*spec.ts"]
+}

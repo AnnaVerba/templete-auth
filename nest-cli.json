@@ -17,13 +17,13 @@
         "tsConfigPath": "apps/api-gateway/tsconfig.json"
       }
     },
-    "delivery": {
+    "mailing": {
       "type": "application",
-      "root": "apps/delivery",
+      "root": "apps/mailing",
       "entryFile": "main",
-      "sourceRoot": "apps/delivery/src",
+      "sourceRoot": "apps/mailing/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/delivery/tsconfig.json"
+        "tsConfigPath": "apps/mailing/tsconfig.json"
       }
     },
     "shared": {
@@ -54,6 +54,5 @@
         "tsConfigPath": "apps/user-management/tsconfig.json"
       }
     }
-
   }
 }

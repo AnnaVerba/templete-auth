@@ -1,6 +1,5 @@
 export * from './api.types';
 export * from './token.types';
-export * from './delivery.types';
 export * from './http-payload.types';
 export * from './auth.types';
 export * from '../dto/requests/auth/facebook-auth';

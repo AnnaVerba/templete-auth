@@ -6,7 +6,6 @@ import {
   UserSessionCreateDto,
   BcryptService,
   User,
-  UserRole,
   UserProfile,
   UserProvider,
   UserSession,
@@ -14,20 +13,16 @@ import {
   UserSessionRepository,
   UserProfileRepository,
   UserProviderRepository,
-  UserRoleRepository,
   UserSessionFindDto,
   UserSessionUpdateDto,
   UserProviderFindDto,
   UserProviderUpdateDto,
   UserFindDto,
-  UserRoleCreateDto,
-  RoleRepository,
   UserUpdateDto,
   WithSessionsEnums,
   FindAllQueryDto,
   UserResponse,
   PaginatedAllResponse,
-  Role,
 } from '@app/shared';
 import { IncludeOptions } from 'sequelize';
 
@@ -38,8 +33,6 @@ export class UserService {
     private readonly userSessionRepository: UserSessionRepository,
     private readonly userProfileRepository: UserProfileRepository,
     private readonly userProviderRepository: UserProviderRepository,
-    private readonly roleRepository: RoleRepository,
-    private readonly userRoleRepository: UserRoleRepository,
     private readonly bcryptService: BcryptService,
   ) {}
 
@@ -58,7 +51,13 @@ export class UserService {
   }
 
   async findOneByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne({
+      where: { email },
+      include: {
+        model: UserSession,
+        attributes: { exclude: ['userId'] },
+      },
+    });
   }
 
   async findOne(data: UserFindDto): Promise<User> {
@@ -66,7 +65,6 @@ export class UserService {
     const include: IncludeOptions[] = [
       { model: UserProfile, attributes: { exclude: ['userId'] } },
       { model: UserProvider, attributes: { exclude: ['userId'] } },
-      { model: Role, through: { attributes: [] }, attributes: ['id', 'name'] },
     ];
     if (withSessions === WithSessionsEnums.Active) {
       include.push({
@@ -186,19 +184,5 @@ export class UserService {
   async deleteProvider(data: UserProviderFindDto): Promise<number> {
     const { id } = data;
     return this.userProviderRepository.destroy({ where: { id } });
-  }
-
-  async addRoleToUser(data: UserRoleCreateDto): Promise<UserRole> {
-    const { userId, roleId } = data;
-    await this.userRepository.throwIfNotExist({ where: { id: userId } });
-    await this.roleRepository.throwIfNotExist({ where: { id: roleId } });
-    await this.userRoleRepository.throwIfExist({ where: { userId, roleId } });
-    return this.userRoleRepository.create({ userId, roleId });
-  }
-
-  async removeRoleFromUser(data: UserRoleCreateDto): Promise<number> {
-    const { userId, roleId } = data;
-    await this.userRoleRepository.throwIfNotExist({ where: { userId, roleId } });
-    return this.userRoleRepository.destroy({ where: { userId, roleId } });
   }
 }
